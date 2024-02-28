@@ -55,7 +55,7 @@ export const login = async (req, res, next) => {
     res
       .cookie("accessToken", token, { httpOnly: true })
       .status(200)
-      .json({ success: true, message: "User Login Successfully", others });
+      .json({ success: true, message: "User Login Successfull", others });
   } catch (err) {
     next(err);
   }
