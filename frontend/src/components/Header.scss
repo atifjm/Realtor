@@ -1,7 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
-    background-color: lightgrey;
+    //background-color: lightgrey;
+    background-color: slategray;
     width: 100vw;
     height: 10vh;
     padding: 1.5em;
@@ -18,7 +19,7 @@
         color: darkred;
       }
       .logo-title2 {
-        color: gray;
+        color: goldenrod;
         font-weight: 500;
       }
     }
@@ -47,6 +48,7 @@
         display: flex;
         list-style: none;
         gap: 2em;
+        color: white;
   
         .menu-item {
           display: flex;
