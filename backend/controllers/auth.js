@@ -62,4 +62,12 @@ export const login = async (req, res, next) => {
 };
 
 //LOGOUT CONTROLLER
+export const logout = async(req, res, next) => {
+  try {
+    res.clearCookie("accessToken", {httpOnly:true})
+    res.status(200).json({success: true, message: "User Logout Successfully"})
+  } catch (err) {
+    next(err)
+  }
+}
 
