@@ -1,0 +1,62 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightgrey;
+    width: 100vw;
+    height: 10vh;
+    padding: 1.5em;
+    user-select: none;
+  
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+  
+      .logo-title1 {
+        color: darkred;
+      }
+      .logo-title2 {
+        color: gray;
+        font-weight: 500;
+      }
+    }
+  
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      .search-input {
+        border: none;
+        outline: none;
+        padding: 0.5em;
+        width: 25vw;
+        border-radius: 0.4em;
+        color: gray;
+      }
+    }
+  
+    .menu-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      .menu-items {
+        display: flex;
+        list-style: none;
+        gap: 2em;
+  
+        .menu-item {
+          display: flex;
+          opacity: 0.7;
+          cursor: pointer;
+        }
+        .menu-item:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  
