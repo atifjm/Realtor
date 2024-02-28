@@ -2,10 +2,14 @@ import { useState } from "react";
 import "../styles/Login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux"
+import {loginStart, loginSuccess, loginFailure} from "../redux/userSlice.js"
 
 const Login = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const {loading, error} = useSelector((state) => state.user)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,14 +18,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(loginStart())
       const res = await axios.post("/auth/login", formData);
       if (res.data) {
+        dispatch(loginSuccess(res.data))
         alert(res.data.message)
         navigate("/");
       } else {
-        alert(res.message);
+        dispatch(loginFailure(res.data.message))
+        alert(res.data.message);
       }
     } catch (err) {
+      dispatch(loginFailure(err.message))
       console.log(err);
     }
   };
