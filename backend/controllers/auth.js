@@ -7,30 +7,27 @@ import validator from "validator";
 //REISTRATION CONTROLLER
 export const register = async (req, res, next) => {
   try {
-    let { username, email, password } = req.body;
+    //let { username, email, password } = req.body;
+    let user = req.body
     const spaceRegex = /\s/;
 
-    if (!username || spaceRegex.test(username)) {
+    if (!user.username || spaceRegex.test(user.username)) {
       return next(createError(400, "Please provide valid username"));
     }
 
-    if (!email || spaceRegex.test(email) || !validator.isEmail(email)) {
+    if (!user.email || spaceRegex.test(user.email) || !validator.isEmail(user.email)) {
       return next(createError(400, "Please provide valid email"));
     }
-    if (!password || spaceRegex.test(password)) {
+    if (!user.password || spaceRegex.test(user.password)) {
       return next(createError(400, "Please provide valid password"));
     }
 
     const hashed = bcrypt.hashSync(password, 10);
 
-    const newUser = await new User({
-      username,
-      email,
-      password: hashed,
-    }).save();
-    res
-      .status(201)
-      .json({ success: true, message: "User created successfully", newUser });
+    const newUser = new User({...req.body, password: hashed})
+    const savedUser = await newUser.save()
+    
+    res.status(201).json({ success: true, message: "User created successfully", savedUser });
   } catch (err) {
     next(err);
   }

@@ -1,23 +1,26 @@
-import {configureStore, combineReducers} from "@reduxjs/toolkit"
-import userSlice from "./userSlice"
-import {persistReducer, persistStore} from "redux-persist"
-import storage from "redux-persist/lib/storage"
-
-const rootReducer = combineReducers({user: userSlice.reducer})
+import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
+import userReducer from "./userSlice"
+import storage from "redux-persist/lib/storage";
+import {FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from "redux-persist"
+import {persistStore, persistReducer} from "redux-persist"
 
 const persistConfig = {
     key: 'root',
-    storage,
     version: 1,
+    storage,
 }
 
-const persistedRootReducer = persistReducer(persistConfig, rootReducer);
+const rootReducer = combineReducers({user: userReducer})
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: persistedRootReducer,
-    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare({
-        serializableCheck: false,
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),  
     })
-})
 
 export const persistor = persistStore(store)
